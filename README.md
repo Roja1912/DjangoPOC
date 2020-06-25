@@ -8,6 +8,7 @@
 <li>css3</li>
 <li>jQuery</li>
 <li>Postgres</li>
+<br />
 
 
 **Softwares and Technologies installation links for windows**
@@ -21,16 +22,19 @@
 <li>Clone the repo</li>
 <li>virtualenv myenv //create environment </li>
 <li>myenv\Scripts\activate //activate environment</li>
+<br />
 
 **Installations**
 <li>python -m pip install Django</li>
 <li>pip install djangorestframework</li>
 <li>pip install pyscopg2</li>
+<br />
 
 **Database Setup**
 <li>Create user in pgadmin</li>
 <li>Create Database in pgadmin</li>
 <li>Add database credintials in settings file</li>
+<br />
 
 ***Run the following commands***
 <li>python manage.py makemigrations</li>
