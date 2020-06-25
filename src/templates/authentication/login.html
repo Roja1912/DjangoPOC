@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'users/style.css' %}">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+   <div class="logincard" align="center">
+    <form action="." method="post">
+         {% csrf_token %}
+        <div  class="form_class_login">
+            {{ form.as_p }}
+        </div>
+
+        <div>
+            <button class="btn btn-success login_button" type="submit">Log In</button>
+        </div>
+        <div style="margin-top:10px">
+            PROJECT NAME
+        </div>
+        <div>
+            Do not have Account?<a href="{% url 'user:register' %}"><i class="fa fa-sign-out pull-right"></i> click to Register</a>
+        </div>
+    </form>
+   </div>
+</body>
+</html>

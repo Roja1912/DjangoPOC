@@ -1,0 +1,81 @@
+{% include 'includes/menu/base.html' %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'users/style.css' %}">
+<div class="userlistcard">
+    <h2 style="text-align:center">Users</h2>
+    <table>
+        <thead>
+           <tr>
+<!--               <th>Id</th>-->
+<!--               <th>Profile</th>-->
+<!--               <th>Username</th>-->
+<!--               <th>Request</th>-->
+           </tr>
+        </thead>
+        {% for object in object_list %}
+            <tr>
+<!--                <td>{{ object.pk }}</td>-->
+                <td><img src="{{ object.profile_object.profile.url}}" style="width: 94px; height: 93px; border-radius: 54px;"/></td>
+                <td>
+                    <h3 style="margin-left:15px;">{{ object.profile_object.user }}</h3>
+                    <div style="margin-top:-14px;margin-left:15px;">{{ object.profile_object.blog }}</div>
+                </td>
+                {% if object.button == "Send" %}
+                    <td><button style="margin-left:7px; background-color: lightgrey" type="button" value="{{ object.profile_object.user.id }}" class="submit-request">Request</button></td>
+                {% else %}
+                     <td style="color:black">Following</td>
+                {% endif %}
+
+
+            </tr>
+        {% endfor %}
+  </table>
+</div>
+
+
+
+
+{% block extra_footer_js %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script>
+$(function () {
+
+ $(".submit-request").click(function() {
+                console.log("33333333777777777",{{user.id}})
+                console.log("3333399999999999", $(this).parent().parent().children(':nth-child(2)').text())
+<!--                console.log("44440", $(this).text('Requested'));-->
+
+
+
+                $.ajax({
+                    type: "POST",
+                     headers: {
+                        Authorization: "Token {{ user.get_token }}"
+                    },
+                    data: JSON.stringify({ 'requesting_user_id':$(this).val() }),
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    url: "/requestuser/requestuser/",
+                    success: function(response) {
+                        if (response=="success"){
+                             $(this).text('Requested');
+                        }
+
+                    }
+
+                })
+ });
+ });
+
+
+
+
+</script>
+
+{% endblock %}
+
+
+
+
+

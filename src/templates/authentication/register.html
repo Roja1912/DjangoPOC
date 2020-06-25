@@ -1,0 +1,17 @@
+{% block main_content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'users/style.css' %}">
+<form method="POST">
+    {% csrf_token %}
+    <div class="registercard">
+        <div  class="form_class_register">
+            {{ form.as_p }}
+        </div>
+    <button style="margin-left:150px;" class="btn btn-success " type="submit">Sign Up</button>
+     <div align="center">
+            Already have Account?<a href="{% url 'user:login' %}"><i class="fa fa-sign-out pull-right"></i> click to Login</a>
+     </div>
+    </div>
+
+</form>
+{% endblock %}

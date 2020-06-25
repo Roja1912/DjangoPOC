@@ -1,0 +1,16 @@
+{% include 'includes/menu/base.html' %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'users/style.css' %}">
+<div class="viewprofilecard">
+    <h2 style="text-align:center">View Profile Detaill</h2>
+        {{ obj }}
+        {{ object_list }}
+          <table>
+              {% for object in object_list %}
+              <tr>
+                  <td>{{ object.blog }}</td>
+              </tr>
+          </table>
+
+        {% endfor %}
+</div>

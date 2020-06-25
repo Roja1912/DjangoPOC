@@ -1,0 +1,97 @@
+{% include 'includes/menu/base.html' %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'users/style.css' %}">
+<html>
+<head>
+<style>
+<!--* {-->
+<!--  box-sizing: border-box;-->
+<!--}-->
+
+<!--.column {-->
+<!--  float: left;-->
+<!--  width: 33.33%;-->
+<!--  padding: 5px;-->
+<!--}-->
+
+<!--/* Clearfix (clear floats) */-->
+<!--.row::after {-->
+<!--  content: "";-->
+<!--  clear: both;-->
+<!--  display: table;-->
+<!--}-->
+</style>
+</head>
+<div class="viewprofilecard">
+    <h2 style="text-align:center">View Profile</h2>
+        {% for object in object_list %}
+                    <table>
+                        <tr>
+                            <td><img src="{{ object.profile.profile.url}}" style="width: 94px; height: 93px; border-radius: 54px;"/></td>
+                            <td><div align="center" style="margin-left:10px">{{ object.posts_count }}</div><a style="margin-left:10px" href="{% url 'viewprofile:view_profile' %}">Posts</a></td>
+                            <td><div align="center" style="margin-left:10px">{{object.followers_count}}</div><a style="margin-left:10px" href="{% url 'followers:followers_list' %}">Followers</a></td>
+                            <td><div align="center" style="margin-left:10px">{{object.following_count}}</div><a href="{% url 'following:following_list' %}">Following</a></td>
+                        </tr>
+                    </table>
+                    <h3 style="margin-top:-3px;">{{ object.profile.user }}</h3>
+                    <div style="margin-top:-14px">{{ object.profile.blog }}</div>
+                    <button style="margin-top:8px; background-color: lightgrey" type="button" class="update_profile" value="{{ object.profile.user.id }}" onclick="location.href='{% url 'userprofile:update_profile'  object.profile.user.id %}'">Update Profile</button>
+                    <div class="viewprofileposts">
+                        {% for each in object.user_posts %}
+                        <tr>
+                            <td><img src="{{ each.postimage.url}}" style="width: 150px; height: 100px; margin-left:10px;"/></td>
+                        </tr>
+                       {% endfor %}
+                   </div>
+<!--                      {% for each in object.user_posts %}-->
+<!--                        <div class="row">-->
+<!--                         <div class="column">-->
+<!--                        <img src="{{ each.postimage.url}}" style="width:100%">-->
+
+<!--                      </div>-->
+<!--                        </div>-->
+<!--                       {% endfor %}-->
+
+        {% endfor %}
+</div>
+</html>
+
+
+<!--{% block extra_footer_js %}-->
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
+
+<!--<script>-->
+<!--$(function () {-->
+
+<!-- $(".update_profile").click(function() {-->
+<!--                 console.log("44440", $(this).val());-->
+<!--                 id = $(this).val()-->
+
+
+
+<!--                $.ajax({-->
+<!--                    type: "POST",-->
+<!--                     headers: {-->
+<!--                        Authorization: "Token {{ user.get_token }}"-->
+<!--                    },-->
+<!--                    contentType: 'application/json; charset=utf-8',-->
+<!--                    dataType: 'json',-->
+<!--                    data: {"csrfmiddlewaretoken" : "{{csrf_token}}"},-->
+<!--                    url: "/userprofile/updateprofile/" + id + "/",-->
+<!--                    success: function(response) {-->
+<!--                        if (response=="success"){-->
+<!--                             $(this).text('Requested');-->
+<!--                        }-->
+
+<!--                    }-->
+
+<!--                })-->
+<!-- });-->
+<!-- });-->
+
+
+
+
+<!--</script>-->
+
+<!--{% endblock %}-->

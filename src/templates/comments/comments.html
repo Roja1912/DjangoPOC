@@ -1,0 +1,66 @@
+
+
+{% include 'includes/menu/base.html' %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'users/style.css' %}">
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="viewprofilecard">
+          <table>
+            {% for object in object_list %}
+            <tr>
+                <td style="width:2%"><img src="{{ object.user.profiles.profile.url }}" style="width: 40px; height: 40px; border-radius: 54px;"/></td>
+                <td><div style="font-weight: bold;">{{ object.user }}</div><div>{{ object.comments }}</div></td>
+                <td class="like_icon_dislike"><i  style="margin-top:0px;" class="fa fa-heart-o" aria-hidden="true"></i></td>
+                <td style="display:none;">{{ object.id }}</td>
+                <td style="margin-left:-70px;display: inline;">{{ object.like_comments }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+<!--      <textarea rows="4" cols="50" name="comments" style="margin-top:-1%" class="commentsbox"  placeholder="Add a comment..."></textarea>-->
+    </div>
+          <textarea rows="4" cols="50" name="comments" style="margin-top:-1%" class="commentsbox"  placeholder="Add a comment..."></textarea>
+
+</form>
+
+
+
+
+
+
+
+{% block extra_footer_js %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+
+$('.commentsbox').keypress(function (e) {
+  console.log("1666666")
+  if (e.which == 13) {
+    console.log("18888888")
+    $('form').submit();
+    return false;    //<---- Add this line
+  }
+});
+
+ $(".like_icon_dislike").click(function() {
+                 $(this).find('i').toggleClass('fa-heart fa-heart-o');
+                 console.log("66666333", $(this).find('i').hasClass("fa-heart"))
+                 console.log("6666688888888", $(this).next('td').html())
+
+                     $.ajax({
+                    type: "POST",
+                     headers: {
+                        Authorization: "Token {{ user.get_token }}"
+                    },
+                    data: JSON.stringify({ 'like':$(this).find('i').hasClass("fa-heart"),
+                                           'commentid':$(this).next('td').html()}),
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    url: "/comments/commentlikeview/",
+                })
+
+
+         });
+</script>
+
+{% endblock %}

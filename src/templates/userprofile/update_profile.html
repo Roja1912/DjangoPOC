@@ -1,0 +1,28 @@
+{% load static %}
+{% include 'includes/menu/base.html' %}
+<link rel="stylesheet" type="text/css" href="{% static 'users/style.css' %}">
+<form method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{ form.as_p }}
+<!--  {{ form.profile }}-->
+<!--  <img src="{{ form.profile.url }}" style="width: 94px; height: 93px; border-radius: 54px;"/>-->
+<!--   <textarea rows="4" cols="50" name="blog" style="margin-top:-1%">{{ form.blog}}</textarea>-->
+<!--    {% for field in form %}-->
+<!--    <div class="row">-->
+<!--      <div class="col-md-2">-->
+<!--        {{ field.label_tag }}-->
+<!--        {% if field.help_text %}-->
+<!--          <sup>{{ field.help_text }}</sup>-->
+<!--          {% endif %}-->
+<!--          {% for error in field.errors %}-->
+<!--           <div class="row">-->
+<!--             <div class="alert alert-danger">{{error}}</div>-->
+<!--           </div>-->
+<!--          {% endfor %}-->
+<!--       </div><div class="col-md-10 pull-left">-->
+<!--         {{ field }}-->
+<!--       </div>-->
+<!--    </div>-->
+<!--  {% endfor %}-->
+  <input type=submit value="submit" />
+</form>

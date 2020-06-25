@@ -1,0 +1,83 @@
+{% include 'includes/menu/base.html' %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'users/style.css' %}">
+<div class="userlistcard">
+        <a href="{% url 'viewprofile:view_profile'%}" style="margin-left:0px; margin-top:-50px;"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+        <h2 style="text-align:center"> Followers </h2>
+    <table>
+    {% for object in object_list %}
+<!--        {% csrf_token %}-->
+        <tr>
+            <td><img src="{{ object.0.profile.url}}" style="width: 94px; height: 93px; border-radius: 54px;"/></td>
+            <td>
+                <a href="{% url 'viewprofile:view_profile_detail' object.0.user.id %}" style="margin-left:15px; margin-top:0px;">{{ object.0.user }}</a>
+                <div style="margin-top:1px;margin-left:15px;">{{ object.0.blog }}</div>
+<!--               <div><button style="margin-left:14px; background-color: lightgrey; margin-top:1px" type="button" value="{{ object.0.user.id }}" class="submit-view">View</button></div>-->
+                <div><a style="margin-left:15px" href="{% url 'usermessages:user_chatting' object.0.user.id %}">Messages</a></div>
+            </td>
+            <td><button style="margin-left:10px; background-color: lightgr0y" type="button" value="{{ object.0.user.id }}" class="submit-remove">Remove</button></td>
+        </tr>
+    {% endfor %}
+</table>
+</div>
+
+
+{% block extra_footer_js %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script>
+$(function () {
+
+ $(".submit-remove").click(function() {
+                console.log("44440", $(this).val());
+
+
+
+                $.ajax({
+                    type: "POST",
+                     headers: {
+                        Authorization: "Token {{ user.get_token }}"
+                    },
+                    data: JSON.stringify({ 'remove_user_id':$(this).val() }),
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    url: "/followers/followersupdate",
+                    success: function(response) {
+                        if (response=="success"){
+                             location.reload(true);
+                        }
+                    }
+
+                })
+ });
+
+<!--  $(".submit-view").click(function() {-->
+<!--                console.log("44440", $(this).val());-->
+<!--                let id=$(this).val()-->
+
+
+
+<!--                $.ajax({-->
+<!--                    type: "GET",-->
+<!--                     headers: {-->
+<!--                        Authorization: "Token {{ user.get_token }}"-->
+<!--                    },-->
+<!--                    contentType: 'application/json; charset=utf-8',-->
+<!--                    dataType: 'json',-->
+<!--                    url: "/viewprofile/viewprofiledetail/" + id + "/",-->
+
+<!--                })-->
+<!-- });-->
+
+
+
+
+
+ });
+
+
+
+
+</script>
+
+{% endblock %}

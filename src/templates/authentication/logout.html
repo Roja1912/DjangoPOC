@@ -1,0 +1,7 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'users/style.css' %}">
+
+<div class="card" style="text-align:center;  box-shadow: 0px 0px 2px 2px mediumaquamarine; width: 35%; height: 100px; margin-top: 107px;margin-left: 460px;">
+    <div><h1>Logged out successfully</h1></div>
+    <a href="{% url 'user:login' %}"><i class="fa fa-sign-out pull-right"></i> click here to Log In</a>
+</div>

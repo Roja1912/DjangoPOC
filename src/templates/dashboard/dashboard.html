@@ -1,0 +1,125 @@
+
+
+{% include 'includes/menu/base.html' %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'users/style.css' %}">
+   <img src="{{ user.profiles.profile.url}}" style="width: 45px; height: 44px; border-radius: 54px; margin-left:648px; margin-top:3px;"/>
+   <h4 style="text-align:center;margin-top:10px;"> WELCOME {{ user }} </h4>
+ <a style="margin-left:640px;" href="{% url 'userposts:create_user_post' %}">Upload</a>
+
+
+<html>
+<head>
+<style>
+<!--* {-->
+<!--  box-sizing: border-box;-->
+<!--}-->
+
+<!--.column {-->
+<!--  float: left;-->
+<!--  width: 33.33%;-->
+<!--  padding: 5px;-->
+<!--}-->
+
+<!--/* Clearfix (clear floats) */-->
+<!--.row::after {-->
+<!--  content: "";-->
+<!--  clear: both;-->
+<!--  display: table;-->
+<!--}-->
+</style>
+</head>
+<div class="viewdashboardcard">
+    <a href="{% url 'messagelist:message_list' %}"><i style="margin-left:384px;" class="fa fa-commenting-o" aria-hidden="true"></i></a>
+    {% for object in object_list %}
+           <div>
+               <table>
+                   <tr>
+                       <td><img src="{{ object.user.profiles.profile.url }}" style="width: 34px; height: 33px; border-radius: 54px;"/>{{ object.user }}</td>
+<!--                       <td style="margin-left:-100px">{{ object.user }}</td>-->
+                   </tr>
+                   <tr>
+                       <td><img src="{{ object.postimage.url}}" style="width: 364px; height: 293px;"/></td>
+                   </tr>
+                   <tr>
+                       <td class="like_icon_dislike"><i  style="margin-top:0px;" class="fa fa-heart-o" aria-hidden="true"></i></td>
+                       <td style="display:none;">{{ object.id }}</td>
+                       <td style="margin-left:-350px;display: inline;">{{ object.likes }}</td>
+                       <td class="comments" style="margin-left:10px;display: inline;"><a href="{% url 'comments:post_comments' object.id %}" ><i class="fa fa-comment-o" aria-hidden="true"></i></a></td>
+                       <td style="display:none;">{{ object.id }}</td>
+                   </tr>
+                   <tr>
+                       <td><p  style="margin-top:-2px;">{{ object.caption }}</p></td>
+                   </tr>
+               </table>
+           </div>
+    {% endfor %}
+</div>
+</html>
+
+
+{% block extra_footer_js %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script>
+$(function () {
+<!--if (localStorage.getItem('likes') == 'like') {-->
+<!--    console.log("hi")-->
+<!--    $('table').find('tr:eq(3)').find('td').find('i'). toggleClass('fa-heart fa-heart-o');-->
+<!--  }-->
+
+ $(".like_icon_dislike").click(function() {
+                 $(this).find('i').toggleClass('fa-heart fa-heart-o');
+                 console.log("66666333", $(this).find('i').hasClass("fa-heart"))
+                 console.log("6666688888888", $(this).next('td').html())
+
+                     $.ajax({
+                    type: "POST",
+                     headers: {
+                        Authorization: "Token {{ user.get_token }}"
+                    },
+                    data: JSON.stringify({ 'like':$(this).find('i').hasClass("fa-heart"),
+                                           'postid':$(this).next('td').html()}),
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    url: "/dashboard/dashboardlikeview/",
+                })
+
+                localStorage.setItem('likes', 'like');
+
+         });
+
+
+
+<!-- $(".comments").click(function() {-->
+<!--           console.log("6666688888888",$(this).next('td').html())-->
+<!--           id = $(this).next('td').html()-->
+<!--            $.ajax({-->
+<!--                     type: "GET",-->
+<!--                     headers: {-->
+<!--                        Authorization: "Token {{ user.get_token }}"-->
+<!--                    },-->
+<!--                    data: JSON.stringify({ 'postid':$(this).next('td').html() }),-->
+<!--                    contentType: 'application/json; charset=utf-8',-->
+<!--                    dataType: 'json',-->
+<!--                    url: "/comments/postcommentslistview/"+ id +"/",-->
+<!--             });-->
+<!--  });-->
+
+
+
+
+
+ });
+
+
+
+
+</script>
+
+{% endblock %}
+
+
+
+
+
