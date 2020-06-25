@@ -1,5 +1,5 @@
 # DjangoPOC
-**This POC is like a photos uploading and chatting Application.</br>
+**This POC is like a photos uploading and chatting Application.
 Where user can create their own profile,can send request to other users and do chat with them**
 
 
