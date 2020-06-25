@@ -1,4 +1,6 @@
 # DjangoPOC
+**This POC is like a photos uploading and chatting Applications.</br>
+Where user can create their own profile,have send request to other users and do chat with them**
 
 
 **Technologies used**
